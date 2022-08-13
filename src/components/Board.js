@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const Board = () => {
-  const colors = [
+  const colorsArr = [
     "blue",
     "red",
     "yellow",
@@ -20,23 +20,16 @@ const Board = () => {
     "cadetblue",
   ];
 
-  const [colorss, setColorss] = useState(colors);
+  const [colorss, setColorss] = useState([]);
 
-  useEffect(() => {
-    // Zaktualizuj tytuł dokumentu korzystając z interfejsu API przeglądarki
-    init();
-  });
-
-  // const Cell = () => {
-  //   return <div onClick={() => handleClick()}></div>;
-  // };
-
-  // const handleClick = () => {
-  //   alert("s");
-  // };
+  // useEffect(() => {
+  //   // Zaktualizuj tytuł dokumentu korzystając z interfejsu API przeglądarki
+  //   // console.log("s");
+  //   init();
+  // });
 
   function shuffle() {
-    let array = colors;
+    let array = colorsArr;
     let currentIndex = array.length,
       randomIndex;
 
@@ -56,26 +49,26 @@ const Board = () => {
     return array;
   }
 
-  // const handleClick = (event) => {
-  //   // shuffle();
-  //   setColorss(shuffle);
-  //   console.log(colors);
-  // };
-  // shuffle(colors);
   shuffle();
+
+  function handleClick() {
+    setColorss(shuffle);
+  }
   let itemList = [];
 
-  const init = function () {
-    colors.map((color, index) => {
-      return itemList.push(<div className={colors[index]} key={index}></div>);
+  function init() {
+    colorsArr.map((color, index) => {
+      return itemList.push(
+        <div className={colorsArr[index]} key={index}></div>
+      );
     });
-  };
+  }
 
   init();
 
   return (
     <>
-      <button onClick={() => setColorss(shuffle)}>new game</button>
+      <button onClick={handleClick}>new game</button>
       <div className="container">{itemList}</div>
     </>
   );
