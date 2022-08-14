@@ -8,10 +8,15 @@ body {
   background-color: blanchedalmond;
 }
 
+body .game {
+  margin-top: 50px;
+  text-align: center;
+}
+
 body .container {
-  margin-left: 30px;
-  margin-top: 30px;
+  margin: 50px 0;
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(4, 85px);
   grid-template-rows: repeat(4, 85px);
   grid-gap: 20px;
@@ -54,4 +59,8 @@ body .container div {
   width: 85px;
   height: 85px;
   border: 1px solid black;
+}
+
+body .container div.white {
+  background-color: white;
 }

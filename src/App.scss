@@ -5,52 +5,56 @@
 }
 body {
   background-color: blanchedalmond;
+  .game {
+    margin-top: 50px;
+    text-align: center;
+  }
   .container {
-    margin-left:30px;
-    margin-top: 30px;
+    margin: 50px 0;
     display: grid;
+    justify-content: center;
     grid-template-columns: repeat(4, 85px);
     grid-template-rows: repeat(4, 85px);
     grid-gap: 20px;
     .red {
       background-color: red;
-  }
-  
-  .blue {
+    }
+
+    .blue {
       background-color: blue;
-  }
-  
-  .yellow {
+    }
+
+    .yellow {
       background-color: yellow;
-  }
-  
-  .green {
+    }
+
+    .green {
       background-color: green;
-  }
-  
-  .brown {
+    }
+
+    .brown {
       background-color: brown;
-  }
-  
-  .gray {
+    }
+
+    .gray {
       background-color: gray;
-  }
-  
-  .lightgreen {
+    }
+
+    .lightgreen {
       background-color: lightgreen;
-  }
-  
-  .cadetblue {
+    }
+
+    .cadetblue {
       background-color: cadetblue;
-  }
+    }
     div {
       background-color: white;
       width: 85px;
       height: 85px;
       border: 1px solid black;
     }
+    div.white {
+      background-color: white;
+    }
   }
 }
-
-
-

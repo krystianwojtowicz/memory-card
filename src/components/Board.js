@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from "react";
+import uniqid from "uniqid";
+import Cell from "./Cell";
 
 const Board = () => {
   const colorsArr = [
-    "blue",
-    "red",
-    "yellow",
-    "green",
-    "brown",
-    "gray",
-    "lightgreen",
-    "cadetblue",
-    "blue",
-    "red",
-    "yellow",
-    "green",
-    "brown",
-    "gray",
-    "lightgreen",
-    "cadetblue",
+    { id: uniqid(), name: "blue", matched: false },
+    { id: uniqid(), name: "red", matched: false },
+    { id: uniqid(), name: "yellow", matched: false },
+    { id: uniqid(), name: "green", matched: false },
+    { id: uniqid(), name: "brown", matched: false },
+    { id: uniqid(), name: "gray", matched: false },
+    { id: uniqid(), name: "lightgreen", matched: false },
+    { id: uniqid(), name: "cadetblue", matched: false },
+    { id: uniqid(), name: "blue", matched: false },
+    { id: uniqid(), name: "red", matched: false },
+    { id: uniqid(), name: "yellow", matched: false },
+    { id: uniqid(), name: "green", matched: false },
+    { id: uniqid(), name: "brown", matched: false },
+    { id: uniqid(), name: "gray", matched: false },
+    { id: uniqid(), name: "lightgreen", matched: false },
+    { id: uniqid(), name: "cadetblue", matched: false },
   ];
 
   const [colorss, setColorss] = useState([]);
-
-  // useEffect(() => {
-  //   // Zaktualizuj tytuł dokumentu korzystając z interfejsu API przeglądarki
-  //   // console.log("s");
-  //   init();
-  // });
+  const [choiceOne, setChoiceOne] = useState(null);
+  const [choiceTwo, setChoiceTwo] = useState(null);
+  const [turns, setTurns] = useState(0);
+  const [disabled, setDisabled] = useState(false);
 
   function shuffle() {
     let array = colorsArr;
@@ -45,75 +45,76 @@ const Board = () => {
         array[currentIndex],
       ];
     }
-
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setTurns(0);
     return array;
   }
-
-  shuffle();
 
   function handleClick() {
     setColorss(shuffle);
   }
-  let itemList = [];
 
-  function init() {
-    colorsArr.map((color, index) => {
-      return itemList.push(
-        <div className={colorsArr[index]} key={index}></div>
-      );
-    });
-  }
+  const handleChoice = (color) => {
+    console.log(color);
+    choiceOne ? setChoiceTwo(color) : setChoiceOne(color);
+  };
 
-  init();
+  useEffect(() => {
+    setColorss(shuffle);
+  }, []);
+
+  useEffect(() => {
+    if (choiceOne && choiceTwo) {
+      setDisabled(true);
+      if (choiceOne.name === choiceTwo.name) {
+        setColorss((prevColors) => {
+          return prevColors.map((color) => {
+            if (color.name === choiceOne.name) {
+              return { ...color, matched: true };
+            } else {
+              return color;
+            }
+          });
+        });
+        choiceOne.matched = choiceTwo.matched = true;
+        setTimeout(resetTurn, 1000);
+      } else {
+        setTimeout(resetTurn, 1000);
+      }
+    }
+  }, [choiceOne, choiceTwo]);
+
+  const resetTurn = () => {
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setTurns((prevTurns) => prevTurns + 1);
+    setDisabled(false);
+  };
 
   return (
     <>
-      <button onClick={handleClick}>new game</button>
-      <div className="container">{itemList}</div>
+      <div className="game">
+        <button onClick={handleClick}>new game</button>
+        <div className="container">
+          {colorss.map((color, index) => {
+            return (
+              <Cell
+                key={color.id}
+                color={color}
+                handleChoice={handleChoice}
+                flipped={
+                  color === choiceOne || color === choiceTwo || color.matched
+                }
+                disabled={disabled}
+              />
+            );
+          })}
+        </div>
+        <p>turns: {turns}</p>
+      </div>
     </>
   );
 };
-{
-  /* // function Square(props) {
-  return (
-    <button className="square" onClick={props.onClick}>
-      {props.value}
-    </button>
-  );
-}
-
-class Board extends Component {
-  renderSquare(i) {
-    return (
-      <Square
-        value={this.props.squares[i]}
-        onClick={() => this.props.onClick(i)}
-      />
-    );
-  }
-
-  render() {
-    return (
-      <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
-      </div>
-    );
-  }
-} */
-}
 
 export default Board;
